@@ -6,8 +6,7 @@ import csv
 def result_output(list,file_name):
     if len(file_name) == 0:
         # print on Terminal
-        for s in list:
-            print(s)
+        print(*list, sep = "\n")
     else:
         # write in the txt-file
         
@@ -19,10 +18,7 @@ def result_output(list,file_name):
             datafile = open(output_file, "w+")
 
             # Write in the rows of results
-            # datafile.writelines(list)
-            for s in result_list:
-                datafile.write(s)
-                datafile.write("\n")
+            datafile.writelines("%s\n" % l for l in list)
     
         except:
             print("Something went wrong when writing to the resulting file")
@@ -32,6 +28,7 @@ def result_output(list,file_name):
 # Lists to store data
 date = []
 profit_losses = []
+average_changes = []
 
 budget_csv = os.path.join("Resources", "budget_data.csv")
 
@@ -50,6 +47,10 @@ with open(budget_csv, newline='') as csv_budget:
     
         # Add profit_losses
         profit_losses.append(int(row[1]))
+               
+    # Add average changes
+    for n in range(1,len(profit_losses)):  
+        average_changes.append(profit_losses[n]-profit_losses[n-1])
 
     # The total number of months included in the dataset  
     total_num_months = len(date)
@@ -58,24 +59,24 @@ with open(budget_csv, newline='') as csv_budget:
     total_amount = sum(profit_losses)
 
     # The average of the changes in "Profit/Losses" over the entire period
-    average_change = round(total_amount/total_num_months,2)
+    average_change = round(sum(average_changes)/len(average_changes),2)
     
     # The greatest increase in profits (date and amount) over the entire period
-    max_profit = max(profit_losses)
+    max_profit = max(average_changes)
     
     # The greatest decrease in losses (date and amount) over the entire period
-    max_loss = min(profit_losses)
+    max_loss = min(average_changes)
 
     # create list of results
     result_list = []
     
     result_list.append("Financial Analysis".center(30," "))
-    result_list.append("".center(30,"-")) 
+    result_list.append("".ljust(30,"-")) 
     result_list.append("Total Months: %d" %(total_num_months))
     result_list.append("Total : $%d" %(total_amount))
-    result_list.append("Average  Change: $%d" %(average_change))
-    result_list.append("Greatest Increase in Profits: %s ($%d)" %(date[profit_losses.index(max_profit)],max_profit))
-    result_list.append("Greatest Decrease in Profits: %s ($%d)" %(date[profit_losses.index(max_loss)],max_loss))    
+    result_list.append("Average  Change: $%.2f" %(average_change))
+    result_list.append("Greatest Increase in Profits: %s ($%d)" %(date[average_changes.index(max_profit)+1],max_profit))
+    result_list.append("Greatest Decrease in Profits: %s ($%d)" %(date[average_changes.index(max_loss)+1],max_loss))    
     
 # print results on Terminal
 result_output(result_list,"")
