@@ -1,12 +1,12 @@
-# Homework Python PayBank
+# Homework Python PyBank
 import os
 import csv
 
 # define function to output the result 
-def result_output(list,file_name):
+def result_output(list,file_name): 
     if len(file_name) == 0:
         # print on Terminal
-        print(*list, sep = "\n")
+        print(*list, sep = "\n", end = " ")
     else:
         # write in the txt-file
         
@@ -15,7 +15,7 @@ def result_output(list,file_name):
         
         try:
             #  Open the output file
-            datafile = open(output_file, "w+")
+            datafile = open(output_file, "w", newline="\n")
 
             # Write in the rows of results
             datafile.writelines("%s\n" % l for l in list)
@@ -78,8 +78,8 @@ with open(budget_csv, newline='') as csv_budget:
     result_list.append("Greatest Increase in Profits: %s ($%d)" %(date[average_changes.index(max_profit)+1],max_profit))
     result_list.append("Greatest Decrease in Profits: %s ($%d)" %(date[average_changes.index(max_loss)+1],max_loss))    
     
-# print results on Terminal
-result_output(result_list,"")
+    # print results on Terminal
+    result_output(result_list,"")
 
-# write results in the file
-result_output(result_list,"budget_final.txt")
+    # write results in the file
+    result_output(result_list,"budget_final.txt")
