@@ -1,5 +1,5 @@
 # Homework Python PyPoll
-import os
+import os 
 import csv
 
 # define function to output the result 
