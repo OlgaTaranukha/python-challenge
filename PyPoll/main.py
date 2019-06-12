@@ -28,7 +28,7 @@ def result_output(list,file_name):
 
 # Lists to store data from csv-file
 voters = []
-counties_csv = []
+#counties_csv = []
 candidates_csv = []
 
 # Lists to store resulting data 
@@ -52,7 +52,7 @@ with open(election_csv, newline='') as csv_election:
         voters.append(int(row[0]))
     
         # Add counties
-        counties_csv.append(row[1])
+        #counties_csv.append(row[1])
         
         # Add candidates
         candidates_csv.append(row[2])
@@ -66,7 +66,7 @@ with open(election_csv, newline='') as csv_election:
     # calculate number of votes and percentage for each candidate
     for c in candidate_names:
         # the total number of votes the each candidate won
-        n = int(candidates_csv.count(c))
+        n = candidates_csv.count(c)
         candidate_votes.append(n)
         
         # the percentage of votes the each candidate won
