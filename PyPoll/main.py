@@ -1,4 +1,4 @@
-# Homework Python PyPoll
+# Homework Python PyPoll 
 import os 
 import csv
 
