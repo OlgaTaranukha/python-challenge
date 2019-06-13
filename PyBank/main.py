@@ -33,12 +33,16 @@ average_changes = []
 budget_csv = os.path.join("Resources", "budget_data.csv")
 
 with open(budget_csv, newline='') as csv_budget:
+    
+    # Detect CSV header line
+    has_header = csv.Sniffer().has_header(csv_budget.read(1024))
+    csv_budget.seek(0)
 
     # CSV reader specifies delimiter and variable that holds contents
-    csvreader = csv.reader(csv_budget, delimiter=',')  
-    
-    # Read the header row first 
-    csv_header = next(csvreader)
+    csvreader = csv.reader(csv_budget, delimiter=',') 
+    if has_header:
+        # Read the header row first 
+        csv_header = next(csvreader)
 
     # Read each row of data after the header
     for row in csvreader:

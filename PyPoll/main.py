@@ -38,13 +38,17 @@ candidate_percentages = []
 
 election_csv = os.path.join("Resources", "election_data.csv")
 
-with open(election_csv, newline='') as csv_election:
+with open(election_csv, newline='') as csv_election:    
+    
+    # Detect CSV header line
+    has_header = csv.Sniffer().has_header(csv_election.read(1024))
+    csv_election.seek(0)
 
     # CSV reader specifies delimiter and variable that holds contents
-    csvreader = csv.reader(csv_election, delimiter=',')  
-    
-    # Read the header row first 
-    csv_header = next(csvreader)
+    csvreader = csv.reader(csv_election, delimiter=',') 
+    if has_header:
+        # Read the header row first 
+        csv_header = next(csvreader)
 
     # Read each row of data after the header
     for row in csvreader:
